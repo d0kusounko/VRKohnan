@@ -9,12 +9,14 @@ public class GameMainSystem : MonoBehaviour
 	public GameObject timeBoard = null;
 	public GameObject endBoard = null;
 	public int gameTimeToSelect = 60;
+	public int gameEndWaitTimeToSelect = 3;
 
 	private CountDownTimer countDownTimer = null;
 	private LookMove lookMove = null;
-	private int gameScore = 0;
-	private float gameTime = 0;
+	private float gameTime			= 0;
+	private float gameEndWaitTime	= 0;
 	private AudioSource bgm;
+	private AudioSource seGameEnd;
 
 	private enum State
 	{
@@ -42,9 +44,10 @@ public class GameMainSystem : MonoBehaviour
 
 		// サウンド設定.
 		AudioSource[] audioSources = GetComponents<AudioSource>();
-		bgm = audioSources[ 0 ];
+		bgm			= audioSources[ 0 ];
+		seGameEnd	= audioSources[ 1 ];
 
-		gameScore = 0;
+		GameData.Instance.InitializeScore();
 		state = State.CountDownStart;
 	}
 
@@ -83,8 +86,22 @@ public class GameMainSystem : MonoBehaviour
 				{
 					// ゲーム終了.
 					gameTime = 0;
+					gameEndWaitTime = gameEndWaitTimeToSelect;
 					EndBoardEnable();
+					seGameEnd.Play();
 					state = State.GameEnd;
+				}
+				break;
+			}
+
+			case State.GameEnd:
+			{
+				// 終了画面表示待ち.
+				gameEndWaitTime -= Time.deltaTime;
+				if( gameEndWaitTime < 0.0 )
+				{
+					// ランキング登録へ.
+					SceneManager.LoadScene( "Ranking" );
 				}
 				break;
 			}
@@ -100,16 +117,6 @@ public class GameMainSystem : MonoBehaviour
 	public bool IsGamePlaying()
 	{
 		return state == State.Game;
-	}
-
-	public void AddGameScore( int add = 1 )
-	{
-		gameScore += add;
-	}
-
-	public int GetScore()
-	{
-		return gameScore;
 	}
 
 	public float GetGameTime()

@@ -48,7 +48,7 @@ public class PlayerItemHit : MonoBehaviour
 			if( itemKohnan.IsHitEnable() )
 			{
 				// スコア加算.
-				gameMainSystem.AddGameScore();
+				GameData.Instance.AddScore();
 
 				// SE再生.
 				seItemGet.Play();

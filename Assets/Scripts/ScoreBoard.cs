@@ -7,18 +7,10 @@ public class ScoreBoard : MonoBehaviour
 {
 	private Text scoreText;
 	private bool isVisible  = false;
-	private GameMainSystem gameMainSystem;
 
 	// Use this for initialization
 	void Start()
 	{
-		// ゲームメイン処理取得.
-		GameObject gameMainSystemObj = GameObject.Find( "GameMainSystem" );
-		if( gameMainSystemObj )
-		{
-			gameMainSystem = gameMainSystemObj.GetComponent<GameMainSystem>();
-		}
-
 		scoreText = transform.FindChild( "Text" ).gameObject.GetComponent<Text>();
 		scoreText.text = "";
 	}
@@ -40,7 +32,7 @@ public class ScoreBoard : MonoBehaviour
 		if( isVisible )
 		{
 			// スコア表示.
-			scoreText.text = "Score: " + gameMainSystem.GetScore().ToString( "D" );
+			scoreText.text = "Score: " + GameData.Instance.GetScore().ToString( "D" );
 		}
 		else
 		{
