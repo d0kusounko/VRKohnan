@@ -85,13 +85,21 @@ class SqlManager {
 			ob_end_clean();
 			throw new \Exception('QueryError('.$this->dsnName.') Table:'.$tableName.' Query:'.$queryName.' ErrInfo:'.$errInfo);
 		}
-		$fetch = $statement->fetchAll(\PDO::FETCH_ASSOC);
-		$cnt = count($fetch);
-		if ($cnt == 1) {
-			$fetch = $fetch[0];
-		} else if ($cnt == 0) {
-			$fetch = null;
-		}
+
+        if( $statement->columnCount() > 0 )
+        {
+            $fetch = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            $cnt = count($fetch);
+            if ($cnt == 1) {
+                $fetch = $fetch[0];
+            } else if ($cnt == 0) {
+                $fetch = null;
+            }
+        }
+        else
+        {
+            $fetch = null;
+        }
 
 		return $fetch;
 	}
