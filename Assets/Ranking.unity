@@ -701,8 +701,8 @@ MonoBehaviour:
   rankingBorad: {fileID: 1220423666}
   objNameInputSystem: {fileID: 923883974}
   uriScheme: http://
-  uriHost: 64.137.164.32
-  uriAppPath: VRKohnan/index.php
+  uriHost: vrkohnan.work
+  uriAppPath: api/index.php
   reqTimeOutSec: 20
   getRankingNum: 10
   dummyHttpWaitTime: 1
