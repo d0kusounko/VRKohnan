@@ -54,7 +54,7 @@ if( $api_execute )
         $binaryParam	= filter_input(INPUT_POST, 'data');
 
         $format	= '['.date('YmdHis')."]\n". 'c='.$controllerName . "\nact=".$actionName . "\ndata=". bin2hex( $binaryParam ) . "\n\n";
-        file_put_contents( '/var/www/html/VRKohnan/log/post_param.log', $format, FILE_APPEND );
+        file_put_contents( 'log/post_param.log', $format, FILE_APPEND );
     }
 
     set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
